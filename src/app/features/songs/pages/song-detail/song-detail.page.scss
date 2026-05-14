@@ -1,3 +1,23 @@
 :host {
   display: block;
 }
+
+.page-shell {
+  animation: fadeIn 400ms ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Enhanced button group styling */
+.flex.flex-wrap.justify-end.gap-2 {
+  ion-button {
+    white-space: nowrap;
+  }
+}

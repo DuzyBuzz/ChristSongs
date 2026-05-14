@@ -1,3 +1,16 @@
 :host {
   display: block;
 }
+
+.page-shell {
+  animation: fadeIn 400ms ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
