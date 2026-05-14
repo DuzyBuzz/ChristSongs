@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
@@ -40,7 +40,7 @@ import { clampNumber } from '../../utilities/tuning-note.util';
     AppHeaderComponent,
   ],
 })
-export class TunerPage {
+export class TunerPage implements OnDestroy {
   private readonly tunerService = inject(TunerService);
 
   protected readonly appRoutes = appRoutes;
