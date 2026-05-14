@@ -13,6 +13,11 @@
   box-shadow: 0 24px 48px -20px rgba(11, 39, 85, 0.25);
 }
 
+.song-card:focus-visible {
+  outline: 3px solid var(--brand-cyan);
+  outline-offset: 3px;
+}
+
 .song-card:active {
   transform: translateY(-1px) scale(1.005);
   transition-duration: 100ms;

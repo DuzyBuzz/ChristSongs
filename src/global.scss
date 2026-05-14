@@ -111,6 +111,11 @@ ion-button:not([disabled]):active {
 	transform: translateY(0);
 }
 
+ion-button:focus-visible {
+	outline: 3px solid var(--brand-cyan);
+	outline-offset: 2px;
+}
+
 /* Enhanced chip styles */
 ion-chip {
 	--background: rgba(255, 255, 255, 0.9);
@@ -126,6 +131,11 @@ ion-chip:hover {
 	box-shadow: 0 4px 12px rgba(11, 39, 85, 0.1);
 }
 
+ion-chip:focus-visible {
+	outline: 2px solid var(--brand-cyan);
+	outline-offset: 2px;
+}
+
 /* Enhanced searchbar */
 ion-searchbar {
 	--background: rgba(255, 255, 255, 0.95);
@@ -135,6 +145,10 @@ ion-searchbar {
 	--placeholder-color: #94a3b8;
 	--placeholder-font-weight: 500;
 	padding: 0;
+}
+
+ion-searchbar:focus-within {
+	--box-shadow: 0 8px 24px rgba(11, 39, 85, 0.12), 0 0 0 3px rgba(28, 180, 200, 0.2);
 }
 
 /* Enhanced list items */
@@ -147,6 +161,12 @@ ion-item {
 	--min-height: 56px;
 	border-radius: 12px;
 	margin-bottom: 0.5rem;
+}
+
+ion-item:focus-within {
+	--border-color: var(--brand-cyan);
+	outline: 2px solid var(--brand-cyan);
+	outline-offset: 2px;
 }
 
 ion-list {
@@ -181,6 +201,11 @@ ion-segment-button {
 	border-radius: 8px;
 }
 
+ion-segment-button:focus-visible {
+	outline: 2px solid var(--brand-cyan);
+	outline-offset: 2px;
+}
+
 /* Loading states */
 ion-spinner {
 	--color: var(--brand-cyan);
@@ -199,4 +224,29 @@ ion-note {
 
 a, button, ion-button, ion-chip, ion-item {
 	-webkit-tap-highlight-color: rgba(28, 180, 200, 0.1);
+}
+
+/* Focus visible styles for accessibility */
+a:focus-visible,
+button:focus-visible {
+	outline: 3px solid var(--brand-cyan);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+/* Skip to main content link for screen readers */
+.skip-to-main {
+	position: absolute;
+	left: -9999px;
+	z-index: 999;
+	padding: 1rem;
+	background: var(--brand-navy);
+	color: white;
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+.skip-to-main:focus {
+	left: 1rem;
+	top: 1rem;
 }
