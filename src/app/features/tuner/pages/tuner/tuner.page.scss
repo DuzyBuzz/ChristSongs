@@ -30,7 +30,11 @@
 .tuner-readout__note {
   font-size: 2rem;
   line-height: 1;
-  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Only animate when tuner is actively listening */
+:host-context(.tuner-listening) .tuner-readout__note {
+  animation: pulse 2s ease-in-out infinite;
 }
 
 .tuner-readout__frequency {
@@ -82,7 +86,11 @@
 
 .tuner-meter__needle--good {
   background: #15803d;
-  animation: glow 1s ease-in-out infinite;
+}
+
+/* Only animate glow when in-tune */
+:host-context(.tuner-listening) .tuner-meter__needle--good {
+  animation: glow 2s ease-in-out infinite;
 }
 
 .tuner-stat {
@@ -127,15 +135,18 @@
     opacity: 1;
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.85;
   }
 }
 
+/* Use transform for better performance */
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.24), 0 0 20px rgba(34, 197, 94, 0.3);
+    transform: translate(-50%, -50%) scale(1);
+    filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.4));
   }
   50% {
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.24), 0 0 30px rgba(34, 197, 94, 0.5);
+    transform: translate(-50%, -50%) scale(1.05);
+    filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.6));
   }
 }
