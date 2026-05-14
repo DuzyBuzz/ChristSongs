@@ -80,3 +80,123 @@ body {
 	@apply mt-2 text-2xl font-semibold;
 	color: var(--brand-navy);
 }
+
+.shadow-soft {
+	box-shadow: 0 20px 36px rgba(11, 39, 85, 0.08);
+}
+
+/* Enhanced button styles */
+ion-button {
+	--border-radius: 12px;
+	--padding-start: 1.25rem;
+	--padding-end: 1.25rem;
+	--padding-top: 0.75rem;
+	--padding-bottom: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	text-transform: none;
+	transition: all 200ms ease;
+}
+
+ion-button::part(native) {
+	transition: all 200ms ease;
+}
+
+ion-button:not([disabled]):hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 20px rgba(11, 39, 85, 0.15);
+}
+
+ion-button:not([disabled]):active {
+	transform: translateY(0);
+}
+
+/* Enhanced chip styles */
+ion-chip {
+	--background: rgba(255, 255, 255, 0.9);
+	--color: var(--brand-navy);
+	border-radius: 999px;
+	font-weight: 600;
+	font-size: 0.85rem;
+	transition: all 180ms ease;
+}
+
+ion-chip:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(11, 39, 85, 0.1);
+}
+
+/* Enhanced searchbar */
+ion-searchbar {
+	--background: rgba(255, 255, 255, 0.95);
+	--border-radius: 16px;
+	--box-shadow: 0 8px 24px rgba(11, 39, 85, 0.08);
+	--icon-color: var(--brand-purple);
+	--placeholder-color: #94a3b8;
+	--placeholder-font-weight: 500;
+	padding: 0;
+}
+
+/* Enhanced list items */
+ion-item {
+	--background: rgba(255, 255, 255, 0.95);
+	--border-color: rgba(148, 163, 184, 0.15);
+	--padding-start: 1rem;
+	--padding-end: 1rem;
+	--inner-padding-end: 0;
+	--min-height: 56px;
+	border-radius: 12px;
+	margin-bottom: 0.5rem;
+}
+
+ion-list {
+	background: transparent;
+	padding: 0;
+}
+
+/* Enhanced select */
+ion-select {
+	--padding-start: 0;
+	--padding-end: 0;
+	font-weight: 500;
+}
+
+/* Enhanced segment */
+ion-segment {
+	--background: rgba(255, 255, 255, 0.9);
+	border-radius: 12px;
+	padding: 4px;
+}
+
+ion-segment-button {
+	--indicator-color: var(--brand-cyan);
+	--indicator-height: 100%;
+	--color: #64748b;
+	--color-checked: #ffffff;
+	font-weight: 600;
+	font-size: 0.9rem;
+	text-transform: none;
+	letter-spacing: 0.01em;
+	min-height: 40px;
+	border-radius: 8px;
+}
+
+/* Loading states */
+ion-spinner {
+	--color: var(--brand-cyan);
+}
+
+/* Enhanced note */
+ion-note {
+	font-size: 0.9rem;
+	line-height: 1.5;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+	-webkit-tap-highlight-color: transparent;
+}
+
+a, button, ion-button, ion-chip, ion-item {
+	-webkit-tap-highlight-color: rgba(28, 180, 200, 0.1);
+}

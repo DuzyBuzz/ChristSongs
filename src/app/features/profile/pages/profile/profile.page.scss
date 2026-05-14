@@ -6,6 +6,7 @@
   background:
     linear-gradient(135deg, rgba(28, 180, 200, 0.1), rgba(132, 97, 216, 0.08));
   border: 1px solid rgba(11, 39, 85, 0.08);
+  animation: fadeIn 400ms ease-out;
 }
 
 .profile-brand-block__logo {
@@ -14,4 +15,40 @@
   max-width: 100%;
   object-fit: contain;
   filter: drop-shadow(0 14px 24px rgba(11, 39, 85, 0.14));
+}
+
+/* Enhanced stat cards */
+.grid.grid-cols-3 > div {
+  transition: all 200ms ease;
+  animation: slideUp 300ms ease-out backwards;
+}
+
+.grid.grid-cols-3 > div:nth-child(1) { animation-delay: 0ms; }
+.grid.grid-cols-3 > div:nth-child(2) { animation-delay: 50ms; }
+.grid.grid-cols-3 > div:nth-child(3) { animation-delay: 100ms; }
+
+.grid.grid-cols-3 > div:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(11, 39, 85, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

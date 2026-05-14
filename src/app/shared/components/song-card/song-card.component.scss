@@ -1,13 +1,19 @@
 .song-card {
   transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease;
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .song-card:hover,
 .song-card:focus-visible {
-  transform: translateY(-2px);
-  border-color: rgba(31, 111, 120, 0.28);
-  box-shadow: 0 20px 40px -28px rgba(23, 35, 42, 0.35);
+  transform: translateY(-3px) scale(1.01);
+  border-color: rgba(28, 180, 200, 0.35);
+  box-shadow: 0 24px 48px -20px rgba(11, 39, 85, 0.25);
+}
+
+.song-card:active {
+  transform: translateY(-1px) scale(1.005);
+  transition-duration: 100ms;
 }
