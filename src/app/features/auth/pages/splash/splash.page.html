@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+  <div class="splash-shell page-shell flex min-h-full flex-col justify-between px-6 py-10">
+    <section class="space-y-6 pt-8">
+      <img
+        [src]="branding.assets.logo.full"
+        alt="ChristSongs logo"
+        title="ChristSongs logo"
+        class="splash-shell__brand-mark"
+      />
+
+      <div class="space-y-4">
+        <span class="section-heading">Guest browsing enabled</span>
+        <h1 class="text-5xl font-semibold leading-tight text-slate-950">
+          Open worship songs instantly, then sign in only when you want to save or publish.
+        </h1>
+        <p class="max-w-md text-base leading-7 text-slate-600">
+          Browse chord sheets, switch instruments, and explore public songs right away while ChristSongs prepares your session.
+        </p>
+      </div>
+
+      <div class="splash-shell__hero page-section max-w-xl overflow-hidden">
+        <img
+          [src]="branding.assets.splashHero"
+          alt="ChristSongs worship team illustration"
+          class="splash-shell__hero-image"
+        />
+        <div class="space-y-3">
+          <p class="text-sm uppercase tracking-[0.22em] text-slate-500">Now loading</p>
+          <p class="text-lg leading-7 text-slate-700">
+            Restoring cached songs, checking your account state, and opening the public song library.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <div class="flex items-center justify-center gap-3 rounded-full bg-white/90 px-5 py-4 text-sm font-medium text-slate-700 shadow-sm shadow-sky-100/80">
+        <ion-spinner name="dots"></ion-spinner>
+        Opening public song browsing
+      </div>
+    </section>
+  </div>
+</ion-content>

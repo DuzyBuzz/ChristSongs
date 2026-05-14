@@ -1,0 +1,45 @@
+@if (isLoading()) {
+  <app-loading-skeleton [count]="1"></app-loading-skeleton>
+} @else if (errorMessage()) {
+  <app-error-state
+    title="Unable to load arrangement"
+    [description]="errorMessage()"
+    [actionLabel]="'Change instrument'"
+  ></app-error-state>
+} @else if (!arrangement()) {
+  <app-empty-state
+    eyebrow="Arrangement"
+    title="No arrangement available"
+    description="Select a different instrument or upload an arrangement for this song."
+  ></app-empty-state>
+} @else {
+  <section class="page-section space-y-5">
+    <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+      <span class="rounded-full bg-slate-100 px-3 py-1 font-medium">Key {{ arrangement()!.key }}</span>
+      <span class="rounded-full bg-slate-100 px-3 py-1 font-medium">Capo {{ arrangement()!.capo ?? 0 }}</span>
+      <span class="rounded-full bg-slate-100 px-3 py-1 font-medium">{{ arrangement()!.tuning }}</span>
+    </div>
+
+    <div class="space-y-5">
+      @for (section of arrangement()!.sections; track section.title + section.type) {
+        <article class="rounded-2xl border border-slate-200/70 bg-slate-50/70 p-4">
+          <div class="mb-3 flex items-center justify-between gap-4">
+            <h3 class="text-base font-semibold text-slate-900">{{ section.title }}</h3>
+            <span class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{{ section.type }}</span>
+          </div>
+
+          <div class="space-y-3 font-mono text-sm leading-7 text-slate-700">
+            @for (line of section.lines; track line.lyrics + $index) {
+              <div class="space-y-1">
+                @if (line.chords.length > 0) {
+                  <p class="text-xs uppercase tracking-[0.14em] text-primary">{{ line.chords.join(' • ') }}</p>
+                }
+                <p>{{ line.lyrics }}</p>
+              </div>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+}

@@ -1,0 +1,14 @@
+<div class="grid gap-4">
+  @for (_ of [].constructor(count()); track $index) {
+    <div class="loading-skeleton rounded-3xl border border-slate-200/70 bg-white/80 p-4 shadow-sm shadow-slate-200/50">
+      <div class="loading-skeleton__line loading-skeleton__line--title"></div>
+      <div class="loading-skeleton__line loading-skeleton__line--copy"></div>
+      <div class="loading-skeleton__line loading-skeleton__line--copy"></div>
+      <div class="loading-skeleton__chips">
+        <div class="loading-skeleton__chip"></div>
+        <div class="loading-skeleton__chip"></div>
+        <div class="loading-skeleton__chip"></div>
+      </div>
+    </div>
+  }
+</div>

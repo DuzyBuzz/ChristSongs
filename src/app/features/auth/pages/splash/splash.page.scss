@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+.splash-shell {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(28, 180, 200, 0.16), transparent 34%),
+    radial-gradient(circle at 90% 18%, rgba(132, 97, 216, 0.16), transparent 28%),
+    radial-gradient(circle at 80% 85%, rgba(245, 182, 69, 0.18), transparent 32%);
+}
+
+.splash-shell__brand-mark {
+  display: block;
+  width: clamp(11rem, 46vw, 16rem);
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 24px rgba(11, 39, 85, 0.14));
+}
+
+.splash-shell__hero {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 245, 255, 0.9));
+}
+
+.splash-shell__hero-image {
+  width: 100%;
+  max-width: 14rem;
+  justify-self: center;
+}
+
+@media (min-width: 768px) {
+  .splash-shell__hero {
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,69 @@
+<section class="page-section" [formGroup]="form()">
+  <span class="section-heading">Song details</span>
+
+  <div class="mt-4">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-input label="Title" labelPlacement="stacked" formControlName="title"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Artist" labelPlacement="stacked" formControlName="artist"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Song Link (Optional)"
+          labelPlacement="stacked"
+          placeholder="Paste YouTube or song reference URL"
+          type="url"
+          formControlName="songLink"
+        ></ion-input>
+      </ion-item>
+
+      @if (songLinkControl.touched && songLinkControl.invalid) {
+        <ion-note class="px-4 text-sm" color="danger">
+          Enter a full link that starts with https://
+        </ion-note>
+      }
+
+      <ion-item>
+        <ion-select label="Instrument" labelPlacement="stacked" formControlName="instrument">
+          @for (instrument of instruments; track instrument) {
+            <ion-select-option [value]="instrument">{{ instrument }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Key" labelPlacement="stacked" formControlName="key"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Capo" labelPlacement="stacked" type="number" formControlName="capo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Tuning" labelPlacement="stacked" formControlName="tuning"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Status" labelPlacement="stacked" formControlName="status">
+          @for (status of statuses; track status) {
+            <ion-select-option [value]="status">{{ status }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Public song</ion-label>
+        <ion-toggle slot="end" formControlName="isPublic"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Enable transpose</ion-label>
+        <ion-toggle slot="end" formControlName="transposeEnabled"></ion-toggle>
+      </ion-item>
+    </ion-list>
+  </div>
+</section>

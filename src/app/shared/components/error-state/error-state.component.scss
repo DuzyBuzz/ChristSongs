@@ -1,0 +1,18 @@
+.error-state {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.error-state__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #17232a;
+}
+
+.error-state__description {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.6;
+}

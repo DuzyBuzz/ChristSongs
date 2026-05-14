@@ -1,0 +1,54 @@
+<app-header title="Home" subtitle="Browse and tune"></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-shell space-y-6 px-4 pb-24 pt-28">
+    <app-offline-indicator></app-offline-indicator>
+
+    <section class="page-section overflow-hidden bg-slate-950 text-white shadow-soft">
+      <span class="section-heading text-slate-300">Discover</span>
+      <h1 class="section-title text-white">Find songs and tune up before practice.</h1>
+      <p class="mt-4 max-w-sm text-sm leading-6 text-slate-300">
+        Search songs, open chords fast, and use the live tuner when you need a quick pitch check.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <ion-button [routerLink]="appRoutes.search">Search songs</ion-button>
+        <ion-button fill="outline" [routerLink]="appRoutes.tuner">Open tuner</ion-button>
+        <ion-button fill="outline" [routerLink]="appRoutes.createSong">Upload</ion-button>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <span class="section-heading">Quick Filters</span>
+      <div class="mt-4 flex flex-wrap gap-2">
+        @for (instrument of instruments; track instrument) {
+          <ion-chip color="primary" outline="true">
+            <ion-label class="capitalize">{{ instrument }}</ion-label>
+          </ion-chip>
+        }
+      </div>
+    </section>
+
+    <app-song-list-section
+      eyebrow="Recent Songs"
+      title="Recently shared songs"
+      [songs]="recentSongs"
+      [isLoading]="isLoading"
+      [errorMessage]="errorMessage"
+      [emptyTitle]="'No recent songs yet'"
+      [emptyDescription]="'New public songs will appear here as soon as they are uploaded.'"
+      (retry)="reload()"
+    ></app-song-list-section>
+
+    <app-song-list-section
+      eyebrow="Popular"
+      title="Songs people open most"
+      [songs]="popularSongs"
+      [isLoading]="isLoading"
+      [errorMessage]="errorMessage"
+      [emptyTitle]="'No popular songs yet'"
+      [emptyDescription]="'This list fills up as people open songs in the app.'"
+      (retry)="reload()"
+    ></app-song-list-section>
+  </div>
+</ion-content>

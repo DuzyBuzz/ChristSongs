@@ -1,0 +1,38 @@
+<app-header
+  title="Settings"
+  subtitle="Preferences"
+  [showBackButton]="true"
+  [defaultHref]="appRoutes.profile"
+></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-shell space-y-6 px-4 pb-24 pt-28">
+    <section class="page-section">
+      <ion-list lines="full">
+        <ion-item>
+          <ion-label>
+            <h2>Offline readiness</h2>
+            <p>Keep cached songs available for reading without a connection.</p>
+          </ion-label>
+          <ion-toggle
+            slot="end"
+            [checked]="settings().offlineReady"
+            (ionChange)="updateSetting('offlineReady', $event)"
+          ></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h2>Readable chord layout</h2>
+            <p>Use clean spacing and high contrast for stage and rehearsal use.</p>
+          </ion-label>
+          <ion-toggle
+            slot="end"
+            [checked]="settings().readableChordLayout"
+            (ionChange)="updateSetting('readableChordLayout', $event)"
+          ></ion-toggle>
+        </ion-item>
+      </ion-list>
+    </section>
+  </div>
+</ion-content>

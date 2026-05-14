@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.sign-in-shell {
+  background:
+    radial-gradient(circle at 0% 15%, rgba(28, 180, 200, 0.18), transparent 30%),
+    radial-gradient(circle at 100% 15%, rgba(132, 97, 216, 0.16), transparent 26%),
+    radial-gradient(circle at 65% 100%, rgba(245, 182, 69, 0.14), transparent 28%);
+}
+
+.sign-in-shell__story {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.97), rgba(239, 248, 252, 0.92));
+}
+
+.sign-in-shell__brand-mark {
+  display: block;
+  width: clamp(11rem, 46vw, 16rem);
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 24px rgba(11, 39, 85, 0.14));
+}
+
+.sign-in-shell__accent-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.sign-in-shell__accent-card {
+  border-radius: 1.25rem;
+  padding: 1.15rem;
+  border: 1px solid rgba(11, 39, 85, 0.08);
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.sign-in-shell__illustration {
+  width: min(100%, 16rem);
+}
+
+@media (min-width: 768px) {
+  .sign-in-shell__accent-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

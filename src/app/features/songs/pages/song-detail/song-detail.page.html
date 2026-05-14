@@ -1,0 +1,88 @@
+<app-header
+  title="Song"
+  subtitle="Chords and lyrics"
+  [showBackButton]="true"
+  [defaultHref]="appRoutes.home"
+></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-shell space-y-6 px-4 pb-24 pt-28">
+    <app-offline-indicator></app-offline-indicator>
+
+    @if (isLoadingSong) {
+      <app-arrangement-viewer [isLoading]="true"></app-arrangement-viewer>
+    } @else if (songErrorMessage) {
+      <app-empty-state
+        eyebrow="Song"
+        title="Unable to open this song"
+        [description]="songErrorMessage"
+      ></app-empty-state>
+    } @else if (!song) {
+      <app-empty-state
+        eyebrow="Song"
+        title="This song could not be found"
+        description="The song may have been removed or the link is no longer valid."
+      ></app-empty-state>
+    } @else {
+      <section class="page-section space-y-4">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="section-heading">Song</span>
+            <h1 class="section-title">{{ song.title }}</h1>
+            <p class="mt-2 text-sm text-slate-500">
+              {{ song.artist }} • Shared by {{ song.uploaderName }}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap justify-end gap-2">
+            <ion-button fill="outline" size="small" [disabled]="isUpdatingFavorite" (click)="toggleFavorite()">
+              <ion-icon slot="start" name="heart-outline"></ion-icon>
+              {{ isFavorite ? 'Favorited' : 'Favorite' }}
+            </ion-button>
+            <ion-button size="small" [disabled]="isUpdatingOffline" (click)="toggleOfflineSong()">
+              <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+              {{ isSavedOffline ? 'Saved offline' : 'Save offline' }}
+            </ion-button>
+            @if (isOwner) {
+              <ion-button fill="outline" size="small" [routerLink]="appRoutes.editSong(song.id)">
+                Edit
+              </ion-button>
+            }
+          </div>
+        </div>
+
+        <app-instrument-selector
+          [instruments]="song.instrumentsAvailable"
+          [selectedInstrument]="selectedInstrument"
+          (instrumentSelected)="selectInstrument($event)"
+        ></app-instrument-selector>
+      </section>
+
+      @if (song.songLink) {
+        <section class="page-section space-y-3">
+          <div>
+            <span class="section-heading">Song link</span>
+            <p class="mt-2 text-sm text-slate-500">Open the video or song page in your browser.</p>
+          </div>
+
+          <ion-button fill="outline" size="small" [disabled]="isOpeningSongLink" (click)="openSongLink()">
+            Open link
+          </ion-button>
+        </section>
+      }
+
+      <app-arrangement-viewer
+        [arrangement]="arrangement"
+        [isLoading]="isLoadingArrangement"
+        [errorMessage]="arrangementErrorMessage"
+      ></app-arrangement-viewer>
+
+      <section class="page-section">
+        <div class="flex items-center justify-between gap-4 text-sm text-slate-500">
+          <span>{{ song.favoritesCount }} favorites</span>
+          <span>{{ song.views }} opens</span>
+        </div>
+      </section>
+    }
+  </div>
+</ion-content>

@@ -1,0 +1,42 @@
+<div class="page-section space-y-4">
+  <div>
+    <span class="section-heading">Search Mode</span>
+    <div class="mt-3 flex flex-wrap gap-2">
+      @for (field of fields; track field) {
+        <button
+          type="button"
+          class="search-filter"
+          [class.search-filter--selected]="field === selectedField()"
+          (click)="fieldSelected.emit(field)"
+        >
+          {{ getFieldLabel(field) }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div>
+    <span class="section-heading">Instrument</span>
+    <div class="mt-3 flex flex-wrap gap-2">
+      <button
+        type="button"
+        class="search-filter"
+        [class.search-filter--selected]="selectedInstrument() === null"
+        (click)="instrumentSelected.emit(null)"
+      >
+        All instruments
+      </button>
+
+      @for (instrument of instruments(); track instrument) {
+        <button
+          type="button"
+          class="search-filter"
+          [class.search-filter--selected]="instrument === selectedInstrument()"
+          (click)="instrumentSelected.emit(instrument)"
+        >
+          {{ getInstrumentLabel(instrument) }}
+        </button>
+      }
+    </div>
+  </div>
+</div>

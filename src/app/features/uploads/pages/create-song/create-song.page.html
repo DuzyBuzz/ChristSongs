@@ -1,0 +1,33 @@
+<app-header title="Create Song" subtitle="Uploads"></app-header>
+
+<ion-content [fullscreen]="true">
+  <form class="page-shell space-y-6 px-4 pb-24 pt-28" [formGroup]="form" (ngSubmit)="save()">
+    <app-offline-indicator></app-offline-indicator>
+
+    @if (saveErrorMessage) {
+      <app-error-state
+        title="Unable to save this song"
+        [description]="saveErrorMessage"
+        [actionLabel]="'Review form'"
+      ></app-error-state>
+    }
+
+    <app-song-metadata-form [form]="form.controls.metadata"></app-song-metadata-form>
+
+    <app-arrangement-editor
+      [sections]="form.controls.sections"
+      (sectionAdded)="addSection()"
+      (sectionRemoved)="removeSection($event)"
+      (lineAdded)="addLine($event)"
+      (lineRemoved)="removeLine($event)"
+    ></app-arrangement-editor>
+
+    <app-arrangement-preview [preview]="form.getRawValue()"></app-arrangement-preview>
+
+    <div class="flex justify-end">
+      <ion-button type="submit" [disabled]="isSaving">
+        {{ isSaving ? 'Saving...' : 'Save song' }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

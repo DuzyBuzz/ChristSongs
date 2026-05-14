@@ -1,0 +1,28 @@
+<section class="space-y-4">
+  <div>
+    <span class="section-heading">{{ eyebrow() }}</span>
+    <h2 class="mt-2 text-xl font-semibold text-slate-900">{{ title() }}</h2>
+  </div>
+
+  @if (isLoading()) {
+    <app-loading-skeleton></app-loading-skeleton>
+  } @else if (errorMessage()) {
+    <app-error-state
+      title="Unable to load this library list"
+      [description]="errorMessage()"
+      (retry)="retry.emit()"
+    ></app-error-state>
+  } @else if (songs().length === 0) {
+    <app-empty-state
+      [eyebrow]="eyebrow()"
+      [title]="emptyTitle()"
+      [description]="emptyDescription()"
+    ></app-empty-state>
+  } @else {
+    <div class="grid gap-4">
+      @for (song of songs(); track song.id) {
+        <app-song-card [song]="song"></app-song-card>
+      }
+    </div>
+  }
+</section>

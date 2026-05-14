@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -35,3 +39,44 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+:root {
+	color-scheme: light;
+	font-family: 'Trebuchet MS', 'Segoe UI', 'Aptos', sans-serif;
+	--brand-navy: #0b2755;
+	--brand-cyan: #1cb4c8;
+	--brand-pink: #ef5b7a;
+	--brand-yellow: #f5b645;
+	--brand-purple: #8461d8;
+	background:
+		radial-gradient(circle at 8% 12%, rgba(28, 180, 200, 0.12), transparent 32%),
+		radial-gradient(circle at 92% 10%, rgba(132, 97, 216, 0.12), transparent 26%),
+		radial-gradient(circle at 80% 85%, rgba(245, 182, 69, 0.12), transparent 30%),
+		linear-gradient(180deg, #fffdf8 0%, #f5efe6 100%);
+}
+
+body {
+	background: var(--ion-background-color);
+	color: var(--ion-text-color);
+}
+
+.page-shell {
+	@apply min-h-full bg-transparent text-slate-900;
+}
+
+.page-section {
+	@apply rounded-3xl border p-5 backdrop-blur;
+	border-color: rgba(11, 39, 85, 0.08);
+	background: rgba(255, 255, 255, 0.9);
+	box-shadow: 0 20px 36px rgba(11, 39, 85, 0.08);
+}
+
+.section-heading {
+	@apply text-sm font-semibold uppercase tracking-[0.24em];
+	color: var(--brand-purple);
+}
+
+.section-title {
+	@apply mt-2 text-2xl font-semibold;
+	color: var(--brand-navy);
+}

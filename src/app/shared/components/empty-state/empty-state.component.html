@@ -1,0 +1,12 @@
+<div class="empty-state page-section">
+  <span class="section-heading">{{ eyebrow() }}</span>
+  <h2 class="empty-state__title">{{ title() }}</h2>
+  <p class="empty-state__description">{{ description() }}</p>
+
+  @if (actionLabel() && actionHref()) {
+    <ion-button fill="clear" [routerLink]="actionHref()" class="empty-state__action">
+      {{ actionLabel() }}
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+  }
+</div>

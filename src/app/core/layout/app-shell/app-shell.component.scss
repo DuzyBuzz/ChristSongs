@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+.app-shell__tab-bar {
+  --background: rgba(255, 255, 255, 0.94);
+  --border: 1px solid rgba(23, 35, 42, 0.08);
+  padding-bottom: calc(env(safe-area-inset-bottom) * 0.5);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+ion-tab-button {
+  --color: #65727d;
+  --color-selected: var(--ion-color-primary);
+  min-height: 62px;
+}

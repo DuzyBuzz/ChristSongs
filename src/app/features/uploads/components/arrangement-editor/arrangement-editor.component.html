@@ -1,0 +1,23 @@
+<section class="page-section space-y-4">
+  <div class="flex items-center justify-between gap-4">
+    <div>
+      <span class="section-heading">Arrangement</span>
+      <h2 class="mt-2 text-xl font-semibold text-slate-900">Structured lyric and chord sections</h2>
+    </div>
+
+    <ion-button fill="outline" size="small" (click)="sectionAdded.emit()">Add section</ion-button>
+  </div>
+
+  <div class="grid gap-4">
+    @for (sectionControl of sections().controls; track $index) {
+      <app-section-editor
+        [sectionForm]="sectionControl"
+        [sectionIndex]="$index"
+        [canRemove]="sections().length > 1"
+        (lineAdded)="lineAdded.emit($event)"
+        (lineRemoved)="lineRemoved.emit($event)"
+        (sectionRemoved)="sectionRemoved.emit($event)"
+      ></app-section-editor>
+    }
+  </div>
+</section>

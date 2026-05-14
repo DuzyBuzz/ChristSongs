@@ -1,0 +1,136 @@
+<app-header title="Tuner" subtitle="Tune your instrument"></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-shell space-y-6 px-4 pb-24 pt-28">
+    <section class="page-section overflow-hidden bg-slate-950 text-white shadow-soft">
+      <span class="section-heading text-slate-300">Live tuner</span>
+      <h1 class="section-title text-white">Tune one string at a time.</h1>
+      <p class="mt-4 max-w-md text-sm leading-6 text-slate-300">
+        Pick your instrument, choose a tuning, tap start, and pluck a string near your phone.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <ion-button [disabled]="tunerState().status === 'requesting'" (click)="toggleListening()">
+          {{ primaryButtonLabel() }}
+        </ion-button>
+        <ion-button fill="outline" [routerLink]="appRoutes.home">Back home</ion-button>
+      </div>
+
+      <p class="mt-4 text-sm text-slate-300">{{ tunerState().message }}</p>
+    </section>
+
+    <section class="page-section">
+      <span class="section-heading">Setup</span>
+
+      <div class="mt-4">
+        <ion-list lines="full">
+          <ion-item>
+            <ion-select
+              label="Instrument"
+              labelPlacement="stacked"
+              [value]="tunerState().preset.instrumentId"
+              (ionChange)="changeInstrument($event.detail.value)"
+            >
+              @for (instrument of instruments; track instrument.id) {
+                <ion-select-option [value]="instrument.id">{{ instrument.label }}</ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select
+              label="Tuning"
+              labelPlacement="stacked"
+              [value]="tunerState().preset.id"
+              (ionChange)="changePreset($event.detail.value)"
+            >
+              @for (preset of availablePresets(); track preset.id) {
+                <ion-select-option [value]="preset.id">{{ preset.name }}</ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="mt-4">
+        <span class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">String</span>
+
+        <ion-segment class="mt-3" scrollable [value]="tunerState().selectedStringId" (ionChange)="changeString($event.detail.value)">
+          <ion-segment-button [value]="autoStringId">
+            <ion-label>Auto</ion-label>
+          </ion-segment-button>
+
+          @for (stringTarget of tunerState().preset.strings; track stringTarget.id) {
+            <ion-segment-button [value]="stringTarget.id">
+              <ion-label>{{ stringTarget.note }}</ion-label>
+            </ion-segment-button>
+          }
+        </ion-segment>
+      </div>
+
+      <p class="mt-3 text-sm text-slate-500">{{ tunerState().preset.description }}</p>
+    </section>
+
+    <section class="page-section space-y-6">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <span class="section-heading">Target</span>
+          <h2 class="section-title">{{ targetTitle() }}</h2>
+          <p class="mt-2 text-sm text-slate-500">{{ targetDescription() }}</p>
+        </div>
+
+        <div class="tuner-readout">
+          <span class="tuner-readout__label">Heard</span>
+          <strong class="tuner-readout__note">{{ heardNoteLabel() }}</strong>
+          <span class="tuner-readout__frequency">{{ frequencyLabel() }}</span>
+        </div>
+      </div>
+
+      <div class="tuner-meter">
+        <div class="tuner-meter__labels">
+          <span>-50</span>
+          <span>0</span>
+          <span>+50</span>
+        </div>
+
+        <div class="tuner-meter__track">
+          <div
+            class="tuner-meter__needle"
+            [class.tuner-meter__needle--good]="tunerState().direction === 'in-tune'"
+            [style.left]="needlePosition()"
+          ></div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <div class="text-3xl font-semibold text-slate-950">{{ centsLabel() }}</div>
+        <p class="mt-2 text-sm text-slate-500">{{ hintText() }}</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div class="tuner-stat">
+          <span class="tuner-stat__label">Status</span>
+          <strong class="tuner-stat__value">{{ statusLabel() }}</strong>
+        </div>
+
+        <div class="tuner-stat">
+          <span class="tuner-stat__label">Tuning</span>
+          <strong class="tuner-stat__value">{{ tunerState().preset.name }}</strong>
+        </div>
+
+        <div class="tuner-stat">
+          <span class="tuner-stat__label">Signal</span>
+          <strong class="tuner-stat__value">{{ clarityLabel() }}</strong>
+        </div>
+      </div>
+
+      @if (
+        tunerState().status === 'denied'
+        || tunerState().status === 'unsupported'
+        || tunerState().status === 'error'
+      ) {
+        <ion-note color="danger">{{ tunerState().message }}</ion-note>
+      }
+    </section>
+  </div>
+</ion-content>

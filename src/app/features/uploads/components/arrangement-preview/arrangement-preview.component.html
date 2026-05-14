@@ -1,0 +1,33 @@
+<section class="page-section space-y-4">
+  <div>
+    <span class="section-heading">Preview</span>
+    <h2 class="mt-2 text-xl font-semibold text-slate-900">{{ preview().metadata.title || 'Untitled song' }}</h2>
+    <p class="mt-2 text-sm text-slate-500">
+      {{ preview().metadata.artist || 'Unknown artist' }} • {{ preview().metadata.instrument }} • Key {{ preview().metadata.key }} • Capo {{ preview().metadata.capo }}
+    </p>
+  </div>
+
+  <div class="space-y-4">
+    @for (section of preview().sections; track section.title + section.type) {
+      <article class="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4">
+        <div class="mb-3 flex items-center justify-between gap-4">
+          <h3 class="text-base font-semibold text-slate-900">{{ section.title }}</h3>
+          <span class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{{ section.type }}</span>
+        </div>
+
+        <div class="space-y-3 font-mono text-sm leading-7 text-slate-700">
+          @for (line of section.lines; track line.lyrics + $index) {
+            <div class="space-y-1">
+              @if (line.chordsText.trim()) {
+                <p class="text-xs uppercase tracking-[0.14em] text-primary">
+                  {{ parseChordTokens(line.chordsText).join(' • ') }}
+                </p>
+              }
+              <p>{{ line.lyrics || '...' }}</p>
+            </div>
+          }
+        </div>
+      </article>
+    }
+  </div>
+</section>

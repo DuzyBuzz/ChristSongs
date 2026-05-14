@@ -1,0 +1,18 @@
+<app-header title="Favorites" subtitle="Library"></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-shell space-y-6 px-4 pb-24 pt-28">
+    <app-offline-indicator></app-offline-indicator>
+
+    <app-library-song-list
+      eyebrow="Library"
+      title="Songs you saved for quick access"
+      [songs]="songs"
+      [isLoading]="isLoading"
+      [errorMessage]="errorMessage"
+      emptyTitle="No favorites yet"
+      emptyDescription="Favorite a song from the detail screen to keep it close to hand."
+      (retry)="reload()"
+    ></app-library-song-list>
+  </div>
+</ion-content>

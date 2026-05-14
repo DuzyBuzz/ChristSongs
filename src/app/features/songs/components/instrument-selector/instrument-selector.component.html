@@ -1,0 +1,11 @@
+<div class="flex flex-wrap gap-2">
+  @for (instrument of instruments(); track instrument) {
+    <ion-chip
+      [color]="instrument === selectedInstrument() ? 'primary' : 'medium'"
+      [outline]="instrument !== selectedInstrument()"
+      (click)="instrumentSelected.emit(instrument)"
+    >
+      <ion-label class="capitalize">{{ instrument }}</ion-label>
+    </ion-chip>
+  }
+</div>

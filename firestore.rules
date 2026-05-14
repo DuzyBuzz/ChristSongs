@@ -1,0 +1,234 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function canReadSong(songData) {
+      return songData != null && (
+        (songData.isPublic == true && songData.status == 'active')
+        || (isSignedIn() && songData.uploaderUid == request.auth.uid)
+      );
+    }
+
+    function isNonEmptyString(value, maxLength) {
+      return value is string && value.size() > 0 && value.size() <= maxLength;
+    }
+
+    function validOptionalSongLink() {
+      return !request.resource.data.keys().hasAny(['songLink'])
+      || (
+        request.resource.data.songLink is string
+        && request.resource.data.songLink.size() <= 500
+        && (
+          request.resource.data.songLink.size() == 0
+          || request.resource.data.songLink.matches('^https://.+')
+        )
+      );
+    }
+
+    function validUserProfile(uid) {
+      return request.resource.data.keys().hasOnly([
+        'uid',
+        'displayName',
+        'email',
+        'photoURL',
+        'createdAt',
+        'updatedAt',
+        'lastLoginAt',
+      ])
+      && request.resource.data.keys().hasAll([
+        'uid',
+        'displayName',
+        'email',
+        'photoURL',
+        'updatedAt',
+        'lastLoginAt',
+      ])
+      && request.resource.data.uid == uid
+      && request.resource.data.uid == request.auth.uid
+      && isNonEmptyString(request.resource.data.displayName, 120)
+      && request.resource.data.email is string
+      && request.resource.data.photoURL is string;
+    }
+
+    function validSongPayload() {
+      return request.resource.data.keys().hasOnly([
+        'title',
+        'titleLower',
+        'artist',
+        'artistLower',
+        'songLink',
+        'slug',
+        'uploaderUid',
+        'uploaderName',
+        'uploaderNameLower',
+        'isPublic',
+        'status',
+        'instrumentsAvailable',
+        'searchKeywords',
+        'views',
+        'favoritesCount',
+        'createdAt',
+        'updatedAt',
+        'version',
+      ])
+      && request.resource.data.keys().hasAll([
+        'title',
+        'titleLower',
+        'artist',
+        'artistLower',
+        'slug',
+        'uploaderUid',
+        'uploaderName',
+        'uploaderNameLower',
+        'isPublic',
+        'status',
+        'instrumentsAvailable',
+        'searchKeywords',
+        'views',
+        'favoritesCount',
+        'updatedAt',
+        'version',
+      ])
+      && request.resource.data.uploaderUid == request.auth.uid
+      && isNonEmptyString(request.resource.data.title, 120)
+      && isNonEmptyString(request.resource.data.titleLower, 120)
+      && isNonEmptyString(request.resource.data.artist, 120)
+      && isNonEmptyString(request.resource.data.artistLower, 120)
+      && isNonEmptyString(request.resource.data.slug, 180)
+      && isNonEmptyString(request.resource.data.uploaderName, 120)
+      && isNonEmptyString(request.resource.data.uploaderNameLower, 120)
+      && validOptionalSongLink()
+      && request.resource.data.isPublic is bool
+      && request.resource.data.status in ['active', 'draft']
+      && request.resource.data.instrumentsAvailable is list
+      && request.resource.data.instrumentsAvailable.size() > 0
+      && request.resource.data.instrumentsAvailable.size() <= 12
+      && request.resource.data.searchKeywords is list
+      && request.resource.data.searchKeywords.size() > 0
+      && request.resource.data.views is int
+      && request.resource.data.favoritesCount is int
+      && request.resource.data.version is int;
+    }
+
+    function validSongCreate() {
+      return validSongPayload()
+      && request.resource.data.views == 0
+      && request.resource.data.favoritesCount == 0
+      && request.resource.data.version == 1
+      && request.resource.data.createdAt is timestamp;
+    }
+
+    function validSongUpdate() {
+      return validSongPayload()
+      && request.resource.data.uploaderUid == resource.data.uploaderUid
+      && request.resource.data.createdAt == resource.data.createdAt
+      && request.resource.data.views == resource.data.views
+      && request.resource.data.favoritesCount == resource.data.favoritesCount
+      && request.resource.data.version is int
+      && request.resource.data.version >= resource.data.version;
+    }
+
+    function validArrangementPayload() {
+      return request.resource.data.keys().hasOnly([
+        'instrument',
+        'key',
+        'capo',
+        'tuning',
+        'transposeEnabled',
+        'sections',
+        'createdAt',
+        'updatedAt',
+      ])
+      && request.resource.data.keys().hasAll([
+        'instrument',
+        'key',
+        'capo',
+        'tuning',
+        'transposeEnabled',
+        'sections',
+        'updatedAt',
+      ])
+      && isNonEmptyString(request.resource.data.instrument, 40)
+      && isNonEmptyString(request.resource.data.key, 12)
+      && (request.resource.data.capo is int || request.resource.data.capo == null)
+      && request.resource.data.transposeEnabled is bool
+      && isNonEmptyString(request.resource.data.tuning, 60)
+      && request.resource.data.sections is list
+      && request.resource.data.sections.size() > 0;
+    }
+
+    function validFavorite(songId) {
+      return request.resource.data.keys().hasOnly(['songId', 'createdAt'])
+      && request.resource.data.songId == songId
+      && request.resource.data.createdAt is timestamp;
+    }
+
+    function validOfflineSong(songId) {
+      return request.resource.data.keys().hasOnly(['songId', 'savedAt', 'lastSyncedAt'])
+      && request.resource.data.songId == songId
+      && request.resource.data.savedAt is timestamp
+      && request.resource.data.lastSyncedAt is timestamp;
+    }
+
+    function validReport() {
+      return request.resource.data.keys().hasOnly([
+        'songId',
+        'reportedByUid',
+        'reason',
+        'createdAt',
+        'status',
+      ])
+      && isNonEmptyString(request.resource.data.songId, 128)
+      && request.resource.data.reportedByUid == request.auth.uid
+      && isNonEmptyString(request.resource.data.reason, 240)
+      && request.resource.data.status in ['open', 'closed'];
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid) && validUserProfile(uid);
+      allow delete: if false;
+
+      match /favorites/{songId} {
+        allow read: if isOwner(uid);
+        allow create, update: if isOwner(uid) && validFavorite(songId);
+        allow delete: if isOwner(uid);
+      }
+
+      match /offlineSongs/{songId} {
+        allow read: if isOwner(uid);
+        allow create, update: if isOwner(uid) && validOfflineSong(songId);
+        allow delete: if isOwner(uid);
+      }
+    }
+
+    match /songs/{songId} {
+      allow read: if canReadSong(resource.data);
+      allow create: if isSignedIn() && validSongCreate();
+      allow update: if isOwner(resource.data.uploaderUid) && validSongUpdate();
+      allow delete: if isOwner(resource.data.uploaderUid);
+
+      match /arrangements/{arrangementId} {
+        allow read: if canReadSong(get(/databases/$(database)/documents/songs/$(songId)).data);
+        allow create: if isOwner(get(/databases/$(database)/documents/songs/$(songId)).data.uploaderUid)
+          && validArrangementPayload()
+          && request.resource.data.createdAt is timestamp;
+        allow update: if isOwner(get(/databases/$(database)/documents/songs/$(songId)).data.uploaderUid)
+          && validArrangementPayload();
+        allow delete: if isOwner(get(/databases/$(database)/documents/songs/$(songId)).data.uploaderUid);
+      }
+    }
+
+    match /reports/{reportId} {
+      allow create: if isSignedIn() && validReport();
+      allow read, update, delete: if false;
+    }
+  }
+}

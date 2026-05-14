@@ -1,0 +1,6 @@
+<div class="error-state page-section">
+  <span class="section-heading">Something went wrong</span>
+  <h2 class="error-state__title">{{ title() }}</h2>
+  <p class="error-state__description">{{ description() }}</p>
+  <ion-button fill="outline" (click)="retry.emit()">{{ actionLabel() }}</ion-button>
+</div>

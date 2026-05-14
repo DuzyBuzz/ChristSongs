@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+.profile-brand-block {
+  background:
+    linear-gradient(135deg, rgba(28, 180, 200, 0.1), rgba(132, 97, 216, 0.08));
+  border: 1px solid rgba(11, 39, 85, 0.08);
+}
+
+.profile-brand-block__logo {
+  display: block;
+  width: min(100%, 9rem);
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 24px rgba(11, 39, 85, 0.14));
+}

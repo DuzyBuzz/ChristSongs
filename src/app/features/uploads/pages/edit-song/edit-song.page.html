@@ -1,0 +1,64 @@
+<app-header
+  title="Edit Song"
+  subtitle="Uploads"
+  [showBackButton]="true"
+  [defaultHref]="appRoutes.myUploads"
+></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-shell space-y-6 px-4 pb-24 pt-28">
+    <app-offline-indicator></app-offline-indicator>
+
+    @if (isLoading) {
+      <app-empty-state
+        eyebrow="Edit Song"
+        title="Loading song editor"
+        description="Preparing metadata and arrangement state for editing."
+      ></app-empty-state>
+    } @else if (errorMessage && !form) {
+      <app-error-state
+        title="Unable to load this song"
+        [description]="errorMessage"
+        [actionLabel]="'Back to uploads'"
+      ></app-error-state>
+    } @else if (!form || !song) {
+      <app-empty-state
+        eyebrow="Edit Song"
+        title="This song is not available"
+        description="The upload may have been removed or you no longer have permission to edit it."
+      ></app-empty-state>
+    } @else {
+      <form class="space-y-6" [formGroup]="form" (ngSubmit)="save()">
+        @if (errorMessage) {
+          <app-error-state
+            title="Unable to update this song"
+            [description]="errorMessage"
+            [actionLabel]="'Review form'"
+          ></app-error-state>
+        }
+
+        <app-song-metadata-form [form]="form.controls.metadata"></app-song-metadata-form>
+
+        <app-arrangement-editor
+          [sections]="form.controls.sections"
+          (sectionAdded)="addSection()"
+          (sectionRemoved)="removeSection($event)"
+          (lineAdded)="addLine($event)"
+          (lineRemoved)="removeLine($event)"
+        ></app-arrangement-editor>
+
+        <app-arrangement-preview [preview]="form.getRawValue()"></app-arrangement-preview>
+
+        <div class="flex flex-wrap justify-between gap-3">
+          <ion-button color="danger" fill="outline" type="button" [disabled]="isDeleting" (click)="deleteSong()">
+            {{ isDeleting ? 'Deleting...' : 'Delete song' }}
+          </ion-button>
+
+          <ion-button type="submit" [disabled]="isSaving">
+            {{ isSaving ? 'Saving...' : 'Save changes' }}
+          </ion-button>
+        </div>
+      </form>
+    }
+  </div>
+</ion-content>
